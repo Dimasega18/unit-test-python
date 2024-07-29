@@ -42,7 +42,7 @@ class tabel_laki():
         provinsi = [True if (x.isupper()) else False for x in self.tabel()['Provinsi/Kabupaten/Kota']]
         
         x = self.tabel().loc[provinsi]._append(provinsi_unik,ignore_index=True).drop_duplicates()
-        return x.loc[(x['Provinsi/Kabupaten/Kota'].values != 'INDONESIA' )]
+        return x.loc[(x['Provinsi/Kabupaten/Kota'].values != 'INDONESIA' )].rename(columns = {'Provinsi/Kabupaten/Kota':'Provinsi'})
     
     def city_regency(self):
         nama = self.tabel()['Provinsi/Kabupaten/Kota'].values
@@ -55,7 +55,7 @@ class tabel_laki():
         kota_kab_unik = nama_unik.loc[~(nama_unik['Provinsi/Kabupaten/Kota'] == 'KEP. BANGKA BELITUNG' )]
         kota_kab = [True if ((x.istitle()) or not (x.isupper()))  else False for x in self.tabel()['Provinsi/Kabupaten/Kota']]
 
-        x = self.tabel().loc[kota_kab]._append(kota_kab_unik,ignore_index=True).drop_duplicates()
+        x = self.tabel().loc[kota_kab]._append(kota_kab_unik,ignore_index=True).drop_duplicates().rename(columns = {'Provinsi/Kabupaten/Kota':'Kabupaten & Kota'})
         return x
 
         
