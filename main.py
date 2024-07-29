@@ -100,10 +100,23 @@ class tabel_perempuan():
         provinsi_unik = nama_unik.loc[(nama_unik['Provinsi/Kabupaten/Kota'] == 'KEP. BANGKA BELITUNG' )]
         provinsi = [True if x.isupper() else False for x in self.tabel()['Provinsi/Kabupaten/Kota']]
         
-        x = self.tabel().loc[provinsi]._append(provinsi_unik,ignore_index=True).drop_duplicates()
+        x = self.tabel().loc[provinsi]._append(provinsi_unik,ignore_index=True).drop_duplicates().rename(columns = {'Provinsi/Kabupaten/Kota':'Provinsi'})
         return x.loc[(x['Provinsi/Kabupaten/Kota'].values != 'INDONESIA' )]
+    
+    def city_regency(self):
+        nama = self.tabel()['Provinsi/Kabupaten/Kota'].values
+        data = []
+        
+        for x in nama :
+            data.append(bool(re.search('[!"#$%&\'()*+,-\./:;<=>?@[\\]^_`{|}~]',x)))
+        nama_unik = self.tabel().loc[data]
+        
+        kota_kab_unik = nama_unik.loc[~(nama_unik['Provinsi/Kabupaten/Kota'] == 'KEP. BANGKA BELITUNG' )]
+        kota_kab = [True if ((x.istitle()) or not (x.isupper()))  else False for x in self.tabel()['Provinsi/Kabupaten/Kota']]
+
+        x = self.tabel().loc[kota_kab]._append(kota_kab_unik,ignore_index=True).drop_duplicates().rename(columns = {'Provinsi/Kabupaten/Kota':'Kabupaten & Kota'})
+        return x
 
 if __name__ == '__main__':
-    df = tabel_laki()
-    print(df.city_regency().shape)
-    print(df.only_province().shape)
+    df = tabel_perempuan()
+    print(df.city_regency())
