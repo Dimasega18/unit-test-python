@@ -92,7 +92,6 @@ class tabel_perempuan():
     def only_province(self):
         nama = self.tabel()['Provinsi/Kabupaten/Kota'].values
         data = []
-        
         for x in nama :
             data.append(bool(re.search('[!"#$%&\'()*+,-\./:;<=>?@[\\]^_`{|}~]',x)))
         nama_unik = self.tabel().loc[data]
@@ -101,7 +100,7 @@ class tabel_perempuan():
         provinsi = [True if x.isupper() else False for x in self.tabel()['Provinsi/Kabupaten/Kota']]
         
         x = self.tabel().loc[provinsi]._append(provinsi_unik,ignore_index=True).drop_duplicates().rename(columns = {'Provinsi/Kabupaten/Kota':'Provinsi'})
-        return x.loc[(x['Provinsi/Kabupaten/Kota'].values != 'INDONESIA' )]
+        return x.loc[(x['Provinsi'].values != 'INDONESIA' )]
     
     def city_regency(self):
         nama = self.tabel()['Provinsi/Kabupaten/Kota'].values
@@ -119,4 +118,4 @@ class tabel_perempuan():
 
 if __name__ == '__main__':
     df = tabel_perempuan()
-    print(df.city_regency())
+    print(df.only_province().shape)
