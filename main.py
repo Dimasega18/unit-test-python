@@ -9,6 +9,7 @@ class tabel_laki():
 
         df_laki = df_new.iloc[:,0:4]
         df_laki['Jenis Kelamin'] = "Laki-laki"
+        df_laki['Unnamed: 1'] = df_laki['Unnamed: 1'].astype('float')
         self.__df = df_laki
 
     def tabel(self):
@@ -68,6 +69,7 @@ class tabel_perempuan():
 
         df_perempuan = df_new.iloc[:,[0,4,5,6]]
         df_perempuan['Jenis Kelamin'] = 'Perempuan'
+        df_perempuan['Unnamed: 4'] = df_perempuan['Unnamed: 4'].astype('float')
         self.__df = df_perempuan
 
     def tabel(self):
@@ -117,5 +119,5 @@ class tabel_perempuan():
         return x
 
 if __name__ == '__main__':
-    df = tabel_perempuan()
-    print(df.only_province().shape)
+    df = tabel_laki()
+    print(df.tabel()['2021'].dtype)
