@@ -3,12 +3,17 @@ import main
 
 class test_data(unittest.TestCase):
 
-    def test_column_row_tabel(self):
+    def test_column_row_table(self):
         
         x = main.tabel_laki().only_province().shape[0]
         y = main.tabel_laki().city_regency().shape[0]
         z = x + y
         
+        self.assertEqual(main.tabel_laki().tabel().shape[0],549)
+        self.assertEqual(main.tabel_laki().tabel().shape[1],5)
+        self.assertEqual(main.tabel_perempuan().tabel().shape[0],549)
+        self.assertEqual(main.tabel_perempuan().tabel().shape[1],5)
+
         self.assertEqual(main.tabel_laki().tabel().shape,main.tabel_perempuan().tabel().shape)
         self.assertEqual(main.tabel_laki().tahun_2021().shape,main.tabel_perempuan().tahun_2021().shape)
         self.assertEqual(main.tabel_laki().tahun_2022().shape,main.tabel_perempuan().tahun_2022().shape)
@@ -24,7 +29,7 @@ class test_data(unittest.TestCase):
         
         self.assertEqual(z,548)
 
-    def test_tipe_tabel(self):
+    def test_table_type(self):
         
         self.assertEqual(main.tabel_laki().tabel()['Provinsi/Kabupaten/Kota'].dtype,"object")
         self.assertEqual(main.tabel_laki().tabel()['Jenis Kelamin'].dtype,"object")
